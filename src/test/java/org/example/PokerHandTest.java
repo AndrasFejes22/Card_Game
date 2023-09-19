@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MainTest {
+class PokerHandTest {
 
     @Test
     void sameSuitTest() {
@@ -60,66 +60,72 @@ class MainTest {
     @Test
     void fourOfAKindTest() {
         String cards = "4d 4d 4s 9c 4h";
-        assertTrue(PokerHand.fourOfAKind(cards));
+        assertEquals(8, PokerHand.fourOfAKind(cards));
     }
 
     @Test
     void threeOfAKindTest() {
         String cards = "9d 9d 4s 9c 2h";
-        assertTrue(PokerHand.threeOfAKind(cards));
+        assertEquals(4, PokerHand.threeOfAKind(cards));
     }
 
     @Test
     void pairTest() {
 
         String cards = "9d 9d 4s 6c 2h";
-        assertTrue(PokerHand.pair(cards));
+        assertEquals(2, PokerHand.pair(cards));
 
         String cards2 = "5d 5c 4s Qc Ah";
-        assertTrue(PokerHand.pair(cards2));
+        assertEquals(2, PokerHand.pair(cards2));
 
         String cards3 = "2d 2h 4s Jc 5h";
-        assertTrue(PokerHand.pair(cards3));
+        assertEquals(2, PokerHand.pair(cards3));
     }
 
     @Test
     void twoPairTest() {
 
         String cards = "Qd Qc 4s 4c 2h";
-        assertTrue(PokerHand.twoPairs(cards));
+        assertEquals(3, PokerHand.twoPairs(cards));
 
         String cards2 = "5d 5c 4s Qc Qh";
-        assertTrue(PokerHand.twoPairs(cards2));
+        assertEquals(3, PokerHand.twoPairs(cards2));
 
         String cards3 = "5d 2h 2s Jc Jh";
-        assertTrue(PokerHand.twoPairs(cards3));
+        assertEquals(3, PokerHand.twoPairs(cards3));
     }
 
     @Test
     void fullHouseTest() {
         String cards2 = "9c 9d 4s 4c 4h";
-        assertTrue(PokerHand.fullHouse(cards2));
+        assertEquals(7, PokerHand.fullHouse(cards2));
     }
 
     @Test
     void StraightFlushTest() {
         String cards = "2d 3d 4d 5d 6d";
-        assertTrue(PokerHand.StraightFlush(cards));
+        assertEquals(9, PokerHand.StraightFlush(cards));
 
-        String cards2 = "Td Jd 7d 8d 9d";
-        assertTrue(PokerHand.StraightFlush(cards2));
+    }
+
+    //"2S 3H 4H 5S 6C"
+    @Test
+    void StraightTest() {
+        String cards = "2S 3H 4H 5S 6C";
+        assertEquals(5, PokerHand.straight(cards));
+
     }
 
     @Test
     void FlushTest() {
         String cards = "2d 7d Jd Ad 4d";
-        assertTrue(PokerHand.Flush(cards));
+        assertEquals(6, PokerHand.Flush(cards));
     }
 
     @Test
     void highCardTest() {
         String cards = "2d 7s Jc Ac 4h";
-        assertTrue(PokerHand.highCard(cards));
+        assertEquals(1, PokerHand.highCard(cards));
     }
 
     @Test
@@ -158,18 +164,36 @@ class MainTest {
 
     }
 
-    /*
+    private PokerHand.Result loss = PokerHand.Result.LOSS;
+    private PokerHand.Result win = PokerHand.Result.WIN;
+    private PokerHand.Result tie = PokerHand.Result.TIE;
+
     @Test
-    void hasNSameValuesTest() {
-        String[] cards = {"2d", "2d", "6d", "5d", "4d"};
-        assertTrue(Main.hasNSameValues(cards, 2));
-
-        String[] cards2 = {"9d", "9d", "4s", "9c", "9h"};
-        assertTrue(Main.hasNSameValues(cards2, 4));
-
-        String[] cards3 = {"9d", "9d", "4s", "5c", "6h"};
-        assertTrue(Main.hasNSameValues(cards3, 2));
-
+    public void PokerHandRankingTest()
+    {
+        Test("Highest straight flush wins",        loss, "2H 3H 4H 5H 6H", "KS AS TS QS JS");
+        Test("Straight flush wins of 4 of a kind", win,  "2H 3H 4H 5H 6H", "AS AD AC AH JD");
+        Test("Highest 4 of a kind wins",           win,  "AS AH 2H AD AC", "JS JD JC JH 3D");
+        Test("4 Of a kind wins of full house",     loss, "2S AH 2H AS AC", "JS JD JC JH AD");
+        Test("Full house wins of flush",           win,  "2S AH 2H AS AC", "2H 3H 5H 6H 7H");
+        Test("Highest flush wins",                 win,  "AS 3S 4S 8S 2S", "2H 3H 5H 6H 7H");
+        Test("Flush wins of straight",             win,  "2H 3H 5H 6H 7H", "2S 3H 4H 5S 6C");
+        Test("Equal straight is tie", 	  	     tie,  "2S 3H 4H 5S 6C", "3D 4C 5H 6H 2S");
+        Test("Straight wins of three of a kind",   win,  "2S 3H 4H 5S 6C", "AH AC 5H 6H AS");
+        Test("3 Of a kind wins of two pair",       loss, "2S 2H 4H 5S 4C", "AH AC 5H 6H AS");
+        Test("2 Pair wins of pair",                win,  "2S 2H 4H 5S 4C", "AH AC 5H 6H 7S");
+        Test("Highest pair wins",                  loss, "6S AD 7H 4S AS", "AH AC 5H 6H 7S");
+        Test("Pair wins of nothing",               loss, "2S AH 4H 5S KC", "AH AC 5H 6H 7S");
+        Test("Highest card loses",                 loss, "2S 3H 6H 7S 9C", "7H 3C TH 6H 9S");
+        Test("Highest card wins",                  win,  "4S 5H 6H TS AC", "3S 5H 6H TS AC");
+        Test("Equal cards is tie",		        tie,  "2S AH 4H 5S 6C", "AD 4C 5H 6H 2C");
     }
-    */
+
+    private void Test(String description, PokerHand.Result expected, String playerHand, String opponentHand)
+    {
+        PokerHand player = new PokerHand(playerHand);
+        PokerHand opponent = new PokerHand(opponentHand);
+        //assertEquals(description + ":", expected, player.compareWith(opponent));
+        assertEquals(expected, player.compareWith(opponent));
+    }
 }

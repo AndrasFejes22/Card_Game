@@ -6,7 +6,7 @@ public class PokerHand {
 
     public enum Result { TIE, WIN, LOSS }
 
-    PokerHand(String hand)
+    public PokerHand(String hand)
     {
     }
 
@@ -62,71 +62,71 @@ public class PokerHand {
         return false;
     }
 
-    public static boolean straight(String cards){
+    public static int straight(String cards){
         Hand hand = hand(cards);
         if(consecutiveValues(hand.getValues()) && !sameSuits(hand.getSuits())){
-            return true;
+            return 5;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean fourOfAKind(String cards){
+    public static int fourOfAKind(String cards){
         if(valueCalculator(cards).equals("14")){
-            return true;
+            return 8;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean threeOfAKind(String cards){
+    public static int threeOfAKind(String cards){
         if(valueCalculator(cards).equals("113")){
-            return true;
+            return 4;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean pair(String cards){
+    public static int pair(String cards){
         if(valueCalculator(cards).equals("1112")){
-            return true;
+            return 2;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean twoPairs(String cards){
+    public static int twoPairs(String cards){
         if(valueCalculator(cards).equals("122")){
-            return true;
+            return 3;
         }
-        return false;
+        return 0;
     }
 
 
-    public static boolean fullHouse(String cards){
+    public static int fullHouse(String cards){
         if(valueCalculator(cards).equals("23")){
-            return true;
+            return 7;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean highCard(String cards){ //De pl. magas lapnál is ha mondjuk K magas mindenkinek, akkor nézik a 2. lapot
+    public static int highCard(String cards){ //De pl. magas lapnál is ha mondjuk K magas mindenkinek, akkor nézik a 2. lapot
         if(valueCalculator(cards).equals("11111")){
-            return true;
+            return 1;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean Flush(String cards){
+    public static int Flush(String cards){
         Hand hand = hand(cards);
         if(sameSuits(hand.getSuits())){
-            return true;
+            return 6;
         }
-        return false;
+        return 0;
     }
 
-    public static boolean StraightFlush(String cards){
+    public static int StraightFlush(String cards){
         Hand hand = hand(cards);
         if(consecutiveValues(hand.getValues()) && sameSuits(hand.getSuits())){
-            return true;
+            return 9;
         }
-        return false;
+        return 0;
     }
 
     //////////////////// RANKING ////////////////////
@@ -161,14 +161,14 @@ public class PokerHand {
 
             if (hand1FirstValueIndex > hand2FirstValueIndex) {
                 System.out.println("HighCards (card1) wins (" + cards1 + ")");
-                //return Result.WIN;
+                return Result.WIN;
             } else if (hand1FirstValueIndex < hand2FirstValueIndex) {
                 System.out.println("HighCards (card2) wins (" + cards2 + ")");
-                //return Result.WIN;
+                return Result.WIN;
             } else {
                 if (cards1.isEmpty() && cards2.isEmpty()) {
                     System.out.println("Equal cards is tie");
-                    //return Result.TIE;
+                    return Result.TIE;
                 }
                 cards1.remove(highestValue1);
                 cards2.remove(highestValue2);
@@ -210,20 +210,13 @@ public class PokerHand {
         return num;
     }
 
-    public static String valueCalculator(String cards){
+    public static String valueCalculator(String cards){ // e.g: High Card --> 11111, Full House--> 32
         Hand hand = hand(cards);
         List<String> values = hand.getValues();
 
-        //List<String> lettersinAWord = new ArrayList<>();
-        List<String> value1 = new ArrayList<>();
-        List<String> value2 = new ArrayList<>();
-        List<String> value3 = new ArrayList<>();
-
-        int totalNumberOfLetters = 0;
         Map<String, Integer> valueStatistics = new TreeMap<>();
 
         for (String value : values) {
-            totalNumberOfLetters++;
             if(valueStatistics.containsKey(value)) {
                 Integer count = valueStatistics.get(value);
                 count++;
@@ -236,46 +229,12 @@ public class PokerHand {
 
         Set<Map.Entry<String, Integer>> entrySet = valueStatistics.entrySet();
 
-
         List<Integer> valueNumbers = new ArrayList<>();
-        List<String> separatedValues = new ArrayList<>();
-        List<String> separatedValues2 = new ArrayList<>();
-        String[] strings = new String[2];
-        String[] strings2 = new String[2];
+
         for (Map.Entry<String, Integer> entry : entrySet) {
             valueNumbers.add(entry.getValue());
-            System.out.println(entry.getKey() + " --> " + entry.getValue() + " db");
-            // full house
-            if(entry.getValue() == 2){
-                //separatedValues = new ArrayList<>();
-                for (int i = 0; i < entry.getValue(); i++) {
-                    //separatedValues.add(entry.getKey());
-                    strings[i] = entry.getKey();
-                }
-            }
-
-        }
-        List<String> stringsFromArray = Arrays.asList(strings);
-        System.out.println("FROM: "+stringsFromArray);
-        for (Map.Entry<String, Integer> entry : entrySet) {
-            //valueNumbers.add(entry.getValue());
-            //System.out.println(entry.getKey() + " --> " + entry.getValue() + " db");
-            // full house
-            if(entry.getValue() == 2 && !stringsFromArray.contains(entry.getKey())){
-                //separatedValues = new ArrayList<>();
-                for (int i = 0; i < entry.getValue(); i++) {
-                    separatedValues2.add(entry.getKey());
-                    //strings[i] = entry.getKey();
-                }
-            }
-
         }
 
-
-        System.out.println("separatedValues: "+ separatedValues);
-        System.out.println("separatedValues2: "+ separatedValues2);
-        System.out.println("strings: "+ Arrays.toString(strings));
-        System.out.println("strings2: "+ Arrays.toString(strings2));
         Collections.sort(valueNumbers);
         //System.out.println("valueNumbers: " + valueNumbers);
         StringBuilder stringBuilder = new StringBuilder();
@@ -284,29 +243,6 @@ public class PokerHand {
         }
 
         return stringBuilder.toString();
-
     }
 
-    /*
-    public static boolean hasNSameValues(String[] cards, int num){ // leMap-eles gyanús...
-        Hand hand = hand(cards);
-        List<String> values = hand.getValues();
-        List<String> valuesList = new ArrayList<>();
-        //9,9,9,9,3
-        Collections.sort(values); // 3,9,9,9,9
-        //Collections.sort(values, Collections.reverseOrder());
-        System.out.println("values: "+values);
-        valuesList.add(values.get(cards.length - num));
-        System.out.println("valuesList_eleje: "+valuesList);
-        for (int i = 1; i < values.size(); i++) {
-            if(valuesList.contains(values.get(i))) {
-                valuesList.add(values.get(i));
-            }
-        }
-        if (valuesList.size() == num + 1){
-            return true;
-        }
-        return false;
-    }
-    */
 }
