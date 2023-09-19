@@ -1,5 +1,6 @@
 package org.example;
 
+import model.PokerHand;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -12,19 +13,19 @@ class MainTest {
     @Test
     void sameSuitTest() {
         List<String> flush = List.of("s", "s", "s", "s", "s");
-        assertTrue(Main.sameSuits(flush));
+        assertTrue(PokerHand.sameSuits(flush));
 
         List<String> notFlush = List.of("s", "h", "s", "s", "s");
-        assertFalse(Main.sameSuits(notFlush));
+        assertFalse(PokerHand.sameSuits(notFlush));
     }
 
     @Test
     void highestIndexTest() {
         List<String> consecutiveValues = List.of("7", "9", "8", "T", "J");
-        assertEquals(9, Main.highestIndex(consecutiveValues));
+        assertEquals(9, PokerHand.highestIndex(consecutiveValues));
 
         List<String> consecutiveValues2 = List.of("5", "3", "4", "2", "6");
-        assertEquals(4, Main.highestIndex(consecutiveValues2));
+        assertEquals(4, PokerHand.highestIndex(consecutiveValues2));
     }
 
     @Test
@@ -32,19 +33,19 @@ class MainTest {
         //List<String> values = List.of("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
 
         List<String> consecutiveValues = List.of("7", "9", "8", "T", "J");
-        assertTrue(Main.consecutiveValues(consecutiveValues));
+        assertTrue(PokerHand.consecutiveValues(consecutiveValues));
 
 
         List<String> consecutiveValues2 = List.of("5", "3", "4", "2", "6");
-        assertTrue(Main.consecutiveValues(consecutiveValues2));
+        assertTrue(PokerHand.consecutiveValues(consecutiveValues2));
 
         //"T", "J", "Q", "K", "A"
         List<String> consecutiveValues3 = List.of("T", "J", "Q", "K", "A");
-        assertTrue(Main.consecutiveValues(consecutiveValues3));
+        assertTrue(PokerHand.consecutiveValues(consecutiveValues3));
 
         // not Consecutive Values
         List<String> notConsecutiveValues = List.of("2", "3", "J", "5", "6");
-        assertFalse(Main.consecutiveValues(notConsecutiveValues));
+        assertFalse(PokerHand.consecutiveValues(notConsecutiveValues));
 
     }
 
@@ -58,67 +59,67 @@ class MainTest {
 
     @Test
     void fourOfAKindTest() {
-        String[] cards = {"4d", "4d", "4s", "9c", "4h"};
-        assertTrue(Main.fourOfAKind(cards));
+        String cards = "4d 4d 4s 9c 4h";
+        assertTrue(PokerHand.fourOfAKind(cards));
     }
 
     @Test
     void threeOfAKindTest() {
-        String[] cards = {"9d", "9d", "4s", "9c", "2h"};
-        assertTrue(Main.threeOfAKind(cards));
+        String cards = "9d 9d 4s 9c 2h";
+        assertTrue(PokerHand.threeOfAKind(cards));
     }
 
     @Test
     void pairTest() {
 
-        String[] cards = {"9d", "9d", "4s", "6c", "2h"};
-        assertTrue(Main.pair(cards));
+        String cards = "9d 9d 4s 6c 2h";
+        assertTrue(PokerHand.pair(cards));
 
-        String[] cards2 = {"5d", "5c", "4s", "Qc", "Ah"};
-        assertTrue(Main.pair(cards2));
+        String cards2 = "5d 5c 4s Qc Ah";
+        assertTrue(PokerHand.pair(cards2));
 
-        String[] cards3 = {"2d", "2h", "4s", "Jc", "5h"};
-        assertTrue(Main.pair(cards3));
+        String cards3 = "2d 2h 4s Jc 5h";
+        assertTrue(PokerHand.pair(cards3));
     }
 
     @Test
     void twoPairTest() {
 
-        String[] cards = {"Qd", "Qc", "4s", "4c", "2h"};
-        assertTrue(Main.twoPairs(cards));
+        String cards = "Qd Qc 4s 4c 2h";
+        assertTrue(PokerHand.twoPairs(cards));
 
-        String[] cards2 = {"5d", "5c", "4s", "Qc", "Qh"};
-        assertTrue(Main.twoPairs(cards2));
+        String cards2 = "5d 5c 4s Qc Qh";
+        assertTrue(PokerHand.twoPairs(cards2));
 
-        String[] cards3 = {"5d", "2h", "2s", "Jc", "Jh"};
-        assertTrue(Main.twoPairs(cards3));
+        String cards3 = "5d 2h 2s Jc Jh";
+        assertTrue(PokerHand.twoPairs(cards3));
     }
 
     @Test
     void fullHouseTest() {
-        String[] cards2 = {"9c", "9d", "4s", "4c", "4h"};
-        assertTrue(Main.fullHouse(cards2));
+        String cards2 = "9c 9d 4s 4c 4h";
+        assertTrue(PokerHand.fullHouse(cards2));
     }
 
     @Test
     void StraightFlushTest() {
-        String[] cards = {"2d", "3d", "4d", "5d", "6d"};
-        assertTrue(Main.StraightFlush(cards));
+        String cards = "2d 3d 4d 5d 6d";
+        assertTrue(PokerHand.StraightFlush(cards));
 
-        String[] cards2 = {"Td", "Jd", "7d", "8d", "9d"};
-        assertTrue(Main.StraightFlush(cards2));
+        String cards2 = "Td Jd 7d 8d 9d";
+        assertTrue(PokerHand.StraightFlush(cards2));
     }
 
     @Test
     void FlushTest() {
-        String[] cards = {"2d", "7d", "Jd", "Ad", "4d"};
-        assertTrue(Main.Flush(cards));
+        String cards = "2d 7d Jd Ad 4d";
+        assertTrue(PokerHand.Flush(cards));
     }
 
     @Test
     void highCardTest() {
-        String[] cards = {"2d", "7s", "Jc", "Ac", "4h"};
-        assertTrue(Main.highCard(cards));
+        String cards = "2d 7s Jc Ac 4h";
+        assertTrue(PokerHand.highCard(cards));
     }
 
     @Test
@@ -153,7 +154,7 @@ class MainTest {
         cards4.add("3");
         cards4.add("6");
         cards4.add("9");
-        assertEquals(Main.Result.TIE, Main.rankingHighCards(cards4, cards3));
+        assertEquals(PokerHand.Result.TIE, PokerHand.rankingHighCards(cards4, cards3));
 
     }
 
