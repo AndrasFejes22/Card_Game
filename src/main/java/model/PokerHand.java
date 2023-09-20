@@ -63,9 +63,12 @@ public class PokerHand {
             //if(playerScore == 9 || playerScore == 6 || playerScore == 5) {
             if(playerScore == 1 || playerScore == 2 || playerScore == 4) { //egyéb?
                 //return highestRank(playerCards, opponentCards);
-
                 return rankingHighCards(playerValues, opponentValues);
-            } else {
+
+            } else if(playerScore == 7){ //full house
+                return fullHouseRanking(playerValues, opponentValues);
+            }
+            else {
                 //return rankingHighCards(playerValuesList, opponentValuesList);
                 return highestRank(playerValues, opponentValues);
             }
@@ -341,8 +344,8 @@ public class PokerHand {
 
 
     // deprecated?
-    public static int valueIndex(List<String> values, String input){
-        //List<String> values = List.of("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
+    public static int valueIndex(String input){
+        List<String> values = List.of("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
         int num = 0;
         for (int i = 0; i < values.size(); i++) {
             if(input.equals(values.get(i))){
@@ -411,6 +414,75 @@ public class PokerHand {
 
             return stringBuilder.toString();
         }
+    }
+
+    public static String[] handMapper(List<String> values){
+        String[] results = new String[2];
+        Map<String, Integer> valueStatistics = new TreeMap<>();
+
+        for (String value : values) {
+            if (valueStatistics.containsKey(value)) {
+                Integer count = valueStatistics.get(value);
+                count++;
+                valueStatistics.put(value, count);
+            } else {
+                valueStatistics.put(value, 1);
+            }
+
+        }
+
+        Set<Map.Entry<String, Integer>> entrySet = valueStatistics.entrySet();
+
+        List<Integer> valueNumbers = new ArrayList<>();
+        List<String> threes = new ArrayList<>();
+        List<String> twos = new ArrayList<>();
+
+        for (Map.Entry<String, Integer> entry : entrySet) {
+            //valueNumbers.add(entry.getValue());
+            if(entry.getValue() == 3){
+                threes.add(entry.getKey());
+            } else {
+                twos.add(entry.getKey());
+            }
+
+        }
+        System.out.println("threes: "+threes);
+        System.out.println("twos: "+twos);
+        results[0] = threes.get(0);
+        results[1] = twos.get(0);
+
+        return results;
+    }
+
+    public Result fullHouseRanking(List<String> playerValues, List<String>  opponentValues){
+
+        String valueOfPlayerThrees = handMapper(playerValues)[0];
+        String valueOfOpponentThrees = handMapper(opponentValues)[0];
+        int playerIndexThrees = valueIndex(valueOfPlayerThrees);
+        int opponentIndexThrees = valueIndex(valueOfOpponentThrees);
+
+        String valueOfPlayerTwos = handMapper(playerValues)[1];
+        String valueOfOpponentTwos = handMapper(opponentValues)[1];
+        int playerIndexTwos = valueIndex(valueOfPlayerTwos);
+        int opponentIndexTwos = valueIndex(valueOfOpponentTwos);
+
+
+        if(playerIndexThrees > opponentIndexThrees){
+            return Result.WIN;
+        } else if(playerIndexThrees < opponentIndexThrees){
+            return Result.LOSS;
+        } else {
+            if(playerIndexTwos > opponentIndexTwos){
+                return Result.WIN;
+            } else if(playerIndexTwos < opponentIndexTwos){
+                return Result.LOSS;
+            }
+            else {
+                return Result.TIE;
+            }
+        }
+
+
     }
 
 }

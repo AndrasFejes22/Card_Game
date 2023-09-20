@@ -164,6 +164,12 @@ class PokerHandTest {
         //assertEquals(PokerHand.Result.LOSS, PokerHand.highestRank(player,opponent));
     }
 
+    @Test
+    void valueIndexTest() {
+        assertEquals(0, PokerHand.valueIndex("2"));
+        assertEquals(12, PokerHand.valueIndex("A"));
+    }
+
     private PokerHand.Result loss = PokerHand.Result.LOSS;
     private PokerHand.Result win = PokerHand.Result.WIN;
     private PokerHand.Result tie = PokerHand.Result.TIE;
@@ -174,7 +180,10 @@ class PokerHandTest {
 
         //Test("Highest straight flush wins",        loss, "2H 3H 4H 5H 6H", "KS AS TS QS JS");
         //Test("Straight flush wins of 4 of a kind", win,  "2H 3H 4H 5H 6H", "AS AD AC AH JD");
-        Test("tie", win,  "2H 2C 3S 3H 3D", "2D 2C 3S 2H 3D");
+        //full houses
+        Test("win", win,  "2H 2C 3S 3H 3D", "2D 2C 3S 2H 3D");
+        Test("loss", loss,  "2H 2C 3S 3H 3D", "4D 4C 3S 3H 3D");
+        Test("tie", tie,  "2H 2C 3S 3H 3D", "2D 2C 3S 3H 3D");
 /*
         Test("Highest 4 of a kind wins",           win,  "AS AH 2H AD AC", "JS JD JC JH 3D");
         Test("4 Of a kind wins of full house",     loss, "2S AH 2H AS AC", "JS JD JC JH AD");

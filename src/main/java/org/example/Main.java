@@ -37,7 +37,9 @@ public class Main {
         values2.add("3");
         values2.add("3");
         values2.add("3");
-        System.out.println(PokerHand.rankingFullHouses(values, values2));
+        //System.out.println(PokerHand.rankingFullHouses(values, values2));
+        PokerHand.handMapper(values);
+        PokerHand.handMapper(values2);
 
 
         //System.out.println(valuesSet);
