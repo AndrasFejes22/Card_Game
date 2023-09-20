@@ -170,6 +170,8 @@ class PokerHandTest {
         assertEquals(12, PokerHand.valueIndex("A"));
     }
 
+    ///////////////////// MAIN TEST CASE /////////////////////
+
     private PokerHand.Result loss = PokerHand.Result.LOSS;
     private PokerHand.Result win = PokerHand.Result.WIN;
     private PokerHand.Result tie = PokerHand.Result.TIE;
@@ -177,7 +179,7 @@ class PokerHandTest {
     @Test
     public void PokerHandRankingTest()
     {
-        /*
+
         Test("Highest straight flush wins",        loss, "2H 3H 4H 5H 6H", "KS AS TS QS JS");
         Test("Straight flush wins of 4 of a kind", win,  "2H 3H 4H 5H 6H", "AS AD AC AH JD");
         //full houses
@@ -208,7 +210,7 @@ class PokerHandTest {
         Test("Highest card loses",                 loss, "2S 3H 6H 7S 9C", "7H 3C TH 6H 9S");
         Test("Highest card wins",                  win,  "4S 5H 6H TS AC", "3S 5H 6H TS AC");
         Test("Equal cards is tie",		        tie,  "2S AH 4H 5S 6C", "AD 4C 5H 6H 2C");
-        */
+
         //Flush:
         Test("win",		        win,  "4C 5C 9C KC 8C", "3S 8S 9S 5S KS");
 

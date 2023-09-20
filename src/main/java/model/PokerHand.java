@@ -4,14 +4,15 @@ import java.util.*;
 
 public class PokerHand {
 
-    public final int STRAIGHT_FLUSH_SCORE = 9;
+    //TODO:
+    public final int STRAIGHT_FLUSH_SCORE = 9; //etc.
 
     String hand;
 
     public enum Result { TIE, WIN, LOSS }
 
 
-    public PokerHand(String hand) { //PokerHand hand = new PokerHand("KS 2H 5C JD TD");
+    public PokerHand(String hand) { // eg.: PokerHand hand = new PokerHand("KS 2H 5C JD TD");
         this.hand = hand;
     }
 
@@ -46,21 +47,20 @@ public class PokerHand {
     public Result compareWith(PokerHand hand) {
         int opponentScore = score(hand);
         int playerScore = score(this);
-        System.out.println("playerScore: "+playerScore);
-        System.out.println("opponentScore: "+opponentScore);
-        List<String>  playerValues = getValues(this);
-        List<String>  opponentValues = getValues(hand);
-        if(playerScore > opponentScore){
+        System.out.println("playerScore: " + playerScore);
+        System.out.println("opponentScore: " + opponentScore);
+        List<String> playerValues = getValues(this);
+        List<String> opponentValues = getValues(hand);
+        if (playerScore > opponentScore) {
             return Result.WIN;
-        } else if (playerScore < opponentScore){
+        } else if (playerScore < opponentScore) {
             return Result.LOSS;
-        } else if(playerScore == opponentScore){
-            if(playerScore == 1 || playerScore == 2 || playerScore == 4 || playerScore == 3 || playerScore == 8|| playerScore == 6) { //egyéb?
+        } else if (playerScore == opponentScore) {
+            if (playerScore == 1 || playerScore == 2 || playerScore == 4 || playerScore == 3 || playerScore == 8 || playerScore == 6) { //egyéb?
                 return rankingHighCards(playerValues, opponentValues);
-            } else if(playerScore == 7){ //full house
+            } else if (playerScore == 7) { //full house
                 return fullHouseRanking(playerValues, opponentValues);
-            }
-            else {
+            } else {
                 return highestRank(playerValues, opponentValues);
             }
         }
@@ -158,7 +158,6 @@ public class PokerHand {
             System.out.println("Equal cards is a tie");
             return Result.TIE;
         }
-
     }
 
 
@@ -204,7 +203,6 @@ public class PokerHand {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < dummy.size(); i++) {
             stringBuilder.append(dummy.get(i)).append("S").append(" ");
-
         }
         return stringBuilder.toString();
     }
@@ -271,7 +269,6 @@ public class PokerHand {
             }
 
             Collections.sort(valueNumbers);
-            //System.out.println("valueNumbers: " + valueNumbers);
             StringBuilder stringBuilder = new StringBuilder();
             for (Integer number : valueNumbers) {
                 stringBuilder.append(number);
@@ -293,7 +290,6 @@ public class PokerHand {
             } else {
                 valueStatistics.put(value, 1);
             }
-
         }
 
         Set<Map.Entry<String, Integer>> entrySet = valueStatistics.entrySet();
@@ -309,8 +305,8 @@ public class PokerHand {
             } else {
                 twos.add(entry.getKey());
             }
-
         }
+        // check:
         System.out.println("threes: "+threes);
         System.out.println("twos: "+twos);
         results[0] = threes.get(0);
@@ -346,8 +342,6 @@ public class PokerHand {
                 return Result.TIE;
             }
         }
-
-
     }
 
 }
