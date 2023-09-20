@@ -1,10 +1,12 @@
 package org.example;
 
+import model.PokerHand;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static model.PokerHand.highestRank;
-import static model.PokerHand.valueCalculator;
+//import static model.PokerHand.highestRank;
+//import static model.PokerHand.valueCalculator;
 
 public class Main {
 
@@ -22,13 +24,26 @@ public class Main {
         System.out.println(DIAMOND);
         System.out.println(CLUB);
 
-        List<String> suits2 = List.of("s", "c", "c", "c");
-        Set<String> valuesSet = new HashSet<>(suits2);
-        List<String> listDistinct = suits2.stream().distinct().collect(Collectors.toList());
+        PokerHand hand = new PokerHand("KS 2H 5C JD TD");
+        List<String> values = new ArrayList<>();
+        values.add("2");
+        values.add("2");
+        values.add("2");
+        values.add("3");
+        values.add("3");
+        List<String> values2 = new ArrayList<>();
+        values2.add("2");
+        values2.add("2");
+        values2.add("3");
+        values2.add("3");
+        values2.add("3");
+        System.out.println(PokerHand.rankingFullHouses(values, values2));
+
 
         //System.out.println(valuesSet);
         //System.out.println(listDistinct);
         //String[] pair = {"2d", "Qd", "Jd", "2d", "Ad"};
+        /*
         String pair = "2S 2H 4H 5S KC";
         System.out.println("pair:");
         System.out.println(valueCalculator(pair));
@@ -52,19 +67,19 @@ public class Main {
         String highCard = "AH QC 5H 6H KS";
         System.out.println("highCard:");
         System.out.println(valueCalculator(highCard));
-
+*/
 
         System.out.println("****************************");
 
         String cards2 = "2S 3H 4H 5S 6C"; // straight
         String cards1 = "4S 5H 6H 7S 8C";
 
-        highestRank(cards1, cards2);
+        //highestRank(cards1, cards2);
 
         String cards5 = "2S 3H 4H 5S 6C";
         String cards6 = "2S 3H 4H 5S 6C";
 
-        highestRank(cards5, cards6);
+        //highestRank(cards5, cards6);
 
         // Possible suites are: s h d c
         String cards3 = "2S 3H 4H 5S 6C";
