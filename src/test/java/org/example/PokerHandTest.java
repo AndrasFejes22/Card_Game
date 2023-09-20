@@ -177,14 +177,20 @@ class PokerHandTest {
     @Test
     public void PokerHandRankingTest()
     {
-
-        //Test("Highest straight flush wins",        loss, "2H 3H 4H 5H 6H", "KS AS TS QS JS");
-        //Test("Straight flush wins of 4 of a kind", win,  "2H 3H 4H 5H 6H", "AS AD AC AH JD");
+        /*
+        Test("Highest straight flush wins",        loss, "2H 3H 4H 5H 6H", "KS AS TS QS JS");
+        Test("Straight flush wins of 4 of a kind", win,  "2H 3H 4H 5H 6H", "AS AD AC AH JD");
         //full houses
         Test("win", win,  "2H 2C 3S 3H 3D", "2D 2C 3S 2H 3D");
         Test("loss", loss,  "2H 2C 3S 3H 3D", "4D 4C 3S 3H 3D");
         Test("tie", tie,  "2H 2C 3S 3H 3D", "2D 2C 3S 3H 3D");
-/*
+        //TwoPairs
+        Test("win", win,  "2H 2C 3S 3H 5D", "2D 2C 3S 3H 4D");
+        Test("loss", loss,  "2H 2C 3S 3H 5D", "2D 2C 3S 3H 7D");
+        Test("tie", tie,  "2H 2C 3S 3H 5D", "2D 2C 3S 3H 5D");
+        Test("tie", loss,  "5H 5C KS KH 2D", "5D 5C KS KH 3D");
+        //FourOfAKind
+        Test("tie", win,  "JH JC JS JH 7D", "JD JC JS JH 6D");
         Test("Highest 4 of a kind wins",           win,  "AS AH 2H AD AC", "JS JD JC JH 3D");
         Test("4 Of a kind wins of full house",     loss, "2S AH 2H AS AC", "JS JD JC JH AD");
         Test("Full house wins of flush",           win,  "2S AH 2H AS AC", "2H 3H 5H 6H 7H");
@@ -202,8 +208,10 @@ class PokerHandTest {
         Test("Highest card loses",                 loss, "2S 3H 6H 7S 9C", "7H 3C TH 6H 9S");
         Test("Highest card wins",                  win,  "4S 5H 6H TS AC", "3S 5H 6H TS AC");
         Test("Equal cards is tie",		        tie,  "2S AH 4H 5S 6C", "AD 4C 5H 6H 2C");
+        */
+        //Flush:
+        Test("win",		        win,  "4C 5C 9C KC 8C", "3S 8S 9S 5S KS");
 
- */
 
     }
 
