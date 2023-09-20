@@ -5,7 +5,11 @@ import java.util.*;
 public class PokerHand {
 
     //TODO:
-    public final int STRAIGHT_FLUSH_SCORE = 9; //etc.
+    /**
+     * public final int STRAIGHT_FLUSH_SCORE = 9; //etc.
+     * more OOP
+     * */
+
 
     String hand;
 
