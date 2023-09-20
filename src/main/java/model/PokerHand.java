@@ -8,6 +8,7 @@ public class PokerHand {
     /**
      * public final int STRAIGHT_FLUSH_SCORE = 9; //etc.
      * more OOP
+     * appellations
      * */
 
 
@@ -61,7 +62,7 @@ public class PokerHand {
             return Result.LOSS;
         } else if (playerScore == opponentScore) {
             if (playerScore == 1 || playerScore == 2 || playerScore == 4 || playerScore == 3 || playerScore == 8 || playerScore == 6) { //egyéb?
-                return rankingHighCards(playerValues, opponentValues);
+                return rankingCards(playerValues, opponentValues);
             } else if (playerScore == 7) { //full house
                 return fullHouseRanking(playerValues, opponentValues);
             } else {
@@ -165,7 +166,7 @@ public class PokerHand {
     }
 
 
-    public PokerHand.Result rankingHighCards(List<String> playerValues, List<String>  opponentValues) { //"2S 3H 6H 7S 9C", "7H 3C TH 6H 9S"
+    public PokerHand.Result rankingCards(List<String> playerValues, List<String>  opponentValues) { //"2S 3H 6H 7S 9C", "7H 3C TH 6H 9S"
         System.out.println("rankingHighCards in process...");
 
         System.out.println("player: "+playerValues);
@@ -173,11 +174,12 @@ public class PokerHand {
 
         List<String> values = List.of("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
         while (true) {
-            System.out.println("WHILE");
             int hand1FirstValueIndex = highestIndex(playerValues);
-            System.out.println("INT1: "+hand1FirstValueIndex);
+            // check:
+            System.out.println("hand1FirstValueIndex: "+hand1FirstValueIndex);
             int hand2FirstValueIndex = highestIndex(opponentValues);
-            System.out.println("INT2: "+hand2FirstValueIndex);
+            // check:
+            System.out.println("hand2FirstValueIndex: "+hand2FirstValueIndex);
             String highestValue1 = values.get(hand1FirstValueIndex);
             String highestValue2 = values.get(hand2FirstValueIndex);
 
@@ -196,20 +198,12 @@ public class PokerHand {
                     opponentValues.remove(highestValue2);
                     System.out.println(playerValues);
                     System.out.println(opponentValues);
-                    rankingHighCards(playerValues, opponentValues);
+                    rankingCards(playerValues, opponentValues);
                 }
             }
         }
     }
 
-
-    public static String dummyPokerHand(List<String> dummy){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < dummy.size(); i++) {
-            stringBuilder.append(dummy.get(i)).append("S").append(" ");
-        }
-        return stringBuilder.toString();
-    }
 
     public static int valueIndex(String input){
         List<String> values = List.of("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
